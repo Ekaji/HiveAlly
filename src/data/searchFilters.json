@@ -1,0 +1,170 @@
+{
+    "LivingSpaces": [
+      {
+        "type": "Private Rooms",
+        "description": "Individual rooms within shared apartments or houses."
+      },
+      {
+        "type": "Shared Apartments",
+        "description": "Entire apartments shared by multiple tenants."
+      },
+      {
+        "type": "Dormitories/Hostels",
+        "description": "Shared living spaces for students or workers."
+      },
+      {
+        "type": "Studio Apartments",
+        "description": "Smaller, self-contained units."
+      },
+      {
+        "type": "Family Homes",
+        "description": "Houses available for co-living or partial rental."
+      },
+      {
+        "type": "Co-living Spaces",
+        "description": "Fully furnished spaces designed for shared living."
+      }
+    ],
+    "WorkSpaces": [
+      {
+        "type": "Private Offices",
+        "description": "Small offices for individual use."
+      },
+      {
+        "type": "Shared Offices",
+        "description": "Spaces where multiple individuals or teams can work."
+      },
+      {
+        "type": "Co-working Spaces",
+        "description": "Flexible, open-plan workspaces."
+      },
+      {
+        "type": "Studios/Workshops",
+        "description": "Creative spaces for art, design, or manufacturing."
+      },
+      {
+        "type": "Conference/Meeting Rooms",
+        "description": "Bookable spaces for business meetings."
+      },
+      {
+        "type": "Hot Desks",
+        "description": "Short-term, non-dedicated desks in co-working spaces."
+      }
+    ],
+    "RetailSpaces": [
+      {
+        "type": "Market Stalls",
+        "description": "Small spaces in markets or bazaars."
+      },
+      {
+        "type": "Shared Shops/Stalls",
+        "description": "Spaces where multiple vendors can co-share a retail unit, dividing costs and maximizing usage."
+      },
+      {
+        "type": "Shopfronts",
+        "description": "Retail units in malls or high-street areas."
+      },
+      {
+        "type": "Pop-Up Spaces",
+        "description": "Short-term spaces for events, seasonal businesses, or experiments."
+      },
+      {
+        "type": "Kiosks",
+        "description": "Compact retail setups in malls or transport hubs."
+      },
+      {
+        "type": "Food Carts/Stalls",
+        "description": "Spaces for mobile or semi-permanent food businesses."
+      }
+    ],
+    "StorageSpaces": [
+      {
+        "type": "Personal Storage Units",
+        "description": "Small spaces for individual storage needs."
+      },
+      {
+        "type": "Garage/Car Storage",
+        "description": "Spaces for vehicles or larger items."
+      },
+      {
+        "type": "Warehouse Space",
+        "description": "Industrial-scale storage solutions."
+      },
+      {
+        "type": "Basement/Attic Spaces",
+        "description": "Extra storage within residential or commercial properties."
+      }
+    ],
+    "EventSpaces": [
+      {
+        "type": "Banquet Halls",
+        "description": "Large spaces for weddings, parties, or gatherings."
+      },
+      {
+        "type": "Outdoor Venues",
+        "description": "Gardens, terraces, or open fields."
+      },
+      {
+        "type": "Community Halls",
+        "description": "Spaces for local events or group activities."
+      },
+      {
+        "type": "Studios",
+        "description": "For photography, videography, or small productions."
+      }
+    ],
+    "RecreationalSpaces": [
+      {
+        "type": "Gym/Workout Spaces",
+        "description": "Areas for personal or shared fitness activities."
+      },
+      {
+        "type": "Playgrounds",
+        "description": "Spaces suitable for childcare or recreational activities."
+      },
+      {
+        "type": "Hobby Rooms",
+        "description": "Dedicated spaces for crafts, music, or other hobbies."
+      },
+      {
+        "type": "Sports Courts",
+        "description": "For tennis, basketball, etc."
+      }
+    ],
+    "TemporaryLodging": [
+      {
+        "type": "Short-Term Rentals",
+        "description": "Daily or weekly lodging options."
+      },
+      {
+        "type": "Vacation Homes",
+        "description": "For short-term leisure stays."
+      },
+      {
+        "type": "Hostels",
+        "description": "Affordable, temporary housing options."
+      }
+    ],
+    "MiscellaneousSpaces": [
+      {
+        "type": "Parking Spaces",
+        "description": "For cars, bikes, or other vehicles."
+      },
+      {
+        "type": "Kitchen Spaces",
+        "description": "Shared or rentable kitchens for catering or food prep."
+      },
+      {
+        "type": "Garden/Allotments",
+        "description": "Land for gardening or small-scale farming."
+      },
+      {
+        "type": "Rooftop Spaces",
+        "description": "For small events or relaxation."
+      },
+      {
+        "type": "Shared Vehicles (Addon)",
+        "description": "For projects with shared transport."
+    }
+  ]
+  }

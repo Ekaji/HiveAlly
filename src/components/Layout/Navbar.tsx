@@ -1,9 +1,52 @@
 import { useSelector } from 'react-redux';
 import { Bell, User } from 'lucide-react';
 import { RootState } from '../../store/store';
+import { Link } from 'react-router-dom';
+
+{/* <Heart /> */}
 
 export default function Navbar() {
   const { user } = useSelector((state: RootState) => state.auth);
+
+  if (!user) {
+    return(
+      <header className="bg-white shadow">
+      <div className="container mx-auto px-6 py-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold text-gray-800"></h1>
+          </div>
+          
+          <div className="flex items-center gap-4 z-50">
+            <Link
+                  to="/register"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+              List space
+            </Link>
+
+            <Link
+                  to="/login"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                Find space
+            </Link>
+
+
+            <Link
+                  to="/contact"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                Contact
+            </Link>
+            
+
+          </div>
+        </div>
+      </div>
+    </header>
+    )
+  }
 
   return (
     <header className="bg-white shadow">
