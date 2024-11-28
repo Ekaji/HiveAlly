@@ -7,12 +7,16 @@ import { setUser } from './store/slices/authSlice';
 
 // Layouts
 import AuthLayout from './components/Layout/AuthLayout';
+import Navbar from './components/Layout/Navbar';
 
 // Pages
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import Profile from './pages/user/Profile';
+import Listings from './pages/user/Listings';
+import Listing from './pages/listing';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -40,14 +44,19 @@ export default function App() {
       <Router>
         <Routes>
           {/* Public routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Navbar />} >
+            <Route index element={<Home />} />
+            {/* <Route path="/" element={<Home />} /> */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/listing/:listingId" element={<Listing />} />
+          </Route>
 
           {/* Protected routes */}
-          <Route path="/dashboard" element={<AuthLayout />}>
-            <Route index element={<Dashboard />} />
-            {/* Add more protected routes here */}
+          <Route path="/user" element={<AuthLayout />}>
+            {/* <Route index element={<Dashboard />} /> */}
+            <Route path="profile" element={<Profile />} />
+            <Route path="listings" element={<Listings />} />
           </Route>
         </Routes>
       </Router>

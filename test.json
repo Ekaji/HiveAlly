@@ -1,0 +1,47 @@
+[
+  {
+    address: "No 51 Top Hill Chikakore Byzhin Kubwa, Abuja"
+    category_id : 4
+    city : "Abuja"
+    country : "Nigeria"
+    created_at  : "2024-11-27T12:08:38.541667+00:00"
+    currency  : "USD"
+    description : "test"
+    featured_image  : {
+      url: 'https://nvwbn.supabase.co/storage/v1/object/public/listing_img/1732709315348.jpg',
+      width: 1280, 
+      height: 853, 
+      size: 220893, 
+      format: 'jpeg'
+    }
+    id  :  "dba5f063-9bef-4872-86a5-2495cc47dd2e"
+    images : {
+      url: 'https://nvon.supabase.co/storage/v1/object/public/listing_img/1732709317463.jpg', 
+      width: 1280, 
+      height: 853, 
+      size: 220893, 
+      format: 'jpeg'
+    }
+   listings_statusb: "Active"
+    location : "0101000020E610000000000000000000000000000000000000"
+    postal_code : "900211"
+    price : 566
+    rules : 
+""
+state
+: 
+"Federal Capital Territory"
+subcategory_id
+: 
+19
+title
+: 
+"test"
+updated_at
+: 
+"2024-11-27T12:08:38.541667+00:00"
+user_id
+: 
+"6592cc5f-4d17-4e48-8d1a-8e12e96b815d"
+  }
+]

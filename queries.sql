@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS public.listings (
     category_id INT REFERENCES categories(id) ON DELETE CASCADE,
     subcategory_id INT REFERENCES subcategories(id) ON DELETE CASCADE,
     price NUMERIC(10, 2) NOT NULL,
+    currency text NOT NULL;
     featured_image image_metadata,
     images image_metadata[],
     -- Location fields
