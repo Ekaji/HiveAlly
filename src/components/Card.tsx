@@ -1,70 +1,92 @@
-import { Heart } from "lucide-react";
+import { useState } from 'react'
 import { Link } from "react-router-dom";
+import { Heart, MapPin, DollarSign } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+
+interface Listing {
+  id: string
+  title: string
+  description: string
+  featured_image: { url: string }
+  city: string
+  state: string
+  price: string
+  currency: string
+}
 
 interface ListingCardProps {
-  listing: {
-    id: string;
-    title: string;
-    description: string;
-    price: string;
-    currency: string;
-    featured_image: {
-      url: string;
-    };
-    city: string;
-    state: string;
-  };
+  listing: Listing
 }
 
-export default function Card ({ listing }: ListingCardProps) {
+export default function InteractiveListingCard({ listing }: ListingCardProps) {
+  const [isLiked, setIsLiked] = useState(false)
 
-  const extractImageUrl = (imageString = '') => {
-    const match = imageString.match(/\((.*?),/);
-    return match ? match[1] : '';
-  };
-
-  console.log(listing )
   return (
-      <Link to={`/listing/${listing.id}`}>
-    <div className="border-2 border-black bg-white p-4">
-      <div className="relative">
-        <img
-          className="w-full h-64 object-cover border-2 border-black"
-          src={listing.featured_image?.url}
-          alt={listing.title}
-        />
-        <div className="absolute inset-0 bg-black opacity-10 hover:opacity-0 transition-opacity"></div>
-      
-        <a href="#!">
-          <div className="absolute top-4 right-4 h-12 w-12 border-2 border-black bg-yellow-400 flex items-center justify-center cursor-pointer hover:bg-black hover:text-yellow-400">
-            <Heart className="text-black hover:text-yellow-400" />
+    <Link to={`/listing/${listing.id}`} >
+      <Card className="group w-full max-w-md mx-auto overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+        <CardContent className="p-0">
+          <div className="relative">
+            <img
+              className="w-full h-64 object-cover"
+              src={listing.featured_image?.url}
+              alt={listing.title}
+              width={400}
+              height={256}
+            />
+            <motion.div 
+              className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="absolute top-4 right-4 bg-white/80 backdrop-blur-sm border-none hover:bg-white"
+                    onClick={(e: { preventDefault: () => void }) => {
+                      e.preventDefault()
+                      setIsLiked(!isLiked)
+                    }}
+                  >
+                    <Heart className={`h-5 w-5 ${isLiked ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{isLiked ? 'Remove from favorites' : 'Add to favorites'}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
-        </a>
-      </div>
-      <div className="mt-4">
-        <a
-          href="#"
-          className="font-bold text-2xl text-black underline hover:no-underline"
-        >
-          {listing?.title || ''}
-        </a>
-        <p className="text-sm text-black mt-2">{listing?.description || ''}</p>
-      </div>
-      <div className="mt-4 flex justify-between items-center border-t-2 border-black pt-4">
-        <a
-          href="#"
-          className="font-medium text-sm text-black flex items-center hover:underline"
-        >
-          <span className="ml-1">
-            {listing?.city || ''}, {listing?.state || ''}
-          </span>
-        </a>
-        <div className="font-bold text-xl text-red-500">
-          {listing?.price || ''} {listing?.currency || ''}
-        </div>
-      </div>
-    </div>
+          <div className="p-4">
+            <h2 className="font-bold text-2xl text-primary mb-2 group-hover:underline">
+              {listing.title}
+            </h2>
+            <p className="text-sm text-muted-foreground mb-4">{listing.description}</p>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center space-x-2">
+                <MapPin className="h-4 w-4 text-primary" />
+                <span className="text-sm font-medium">
+                  {listing.city}, {listing.state}
+                </span>
+              </div>
+              <Badge variant="secondary" className="text-lg font-bold">
+                <DollarSign className="h-4 w-4 mr-1" />
+                {listing.price} {listing.currency}
+              </Badge>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </Link>
-  );
+  )
 }
+
+
 
