@@ -171,6 +171,99 @@ const uploadImages = async (featuredImage: File, additionalImages?: File[]) => {
 };
 
 // Main submit handler
+// const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+
+//     // Create an array of IDs for checked amenities
+//     const updatedSelectedAmenityIds = amenities
+//         .filter((amenity) => amenity.checked)
+//         .map((amenity) => amenity.id);
+
+//     const {
+//         additionalImages,
+//         address,
+//         city,
+//         country,
+//         description,
+//         featuredImage,
+//         postalCode,
+//         price,
+//         rules,
+//         state,
+//         title,
+//         currencyCode
+//     } = formData;
+
+//     try {
+//         // Authenticate user
+//         const { 
+//             data: userData, 
+//             // error: userError 
+//         } = await supabase.auth.getUser();
+//         const userId = userData?.user?.id;
+
+//         // Upload images
+//         const { 
+//             featuredImageMetadata, 
+//             additionalImagesMetadata 
+//         } = await uploadImages(featuredImage as File, additionalImages);
+
+//         // Insert listing
+//         const { data, error } = await supabase
+//             .from('listings')
+//             .insert([
+//                 {
+//                     user_id: userId,
+//                     title,
+//                     description,
+//                     category_id: selectedCategoryId,
+//                     subcategory_id: selectedSubCategoryId,
+//                     price: Number(price),
+//                     featured_image: featuredImageMetadata,
+//                     images: additionalImagesMetadata,
+//                     address,
+//                     city,
+//                     state,
+//                     country,
+//                     currency: currencyCode,
+//                     postal_code: postalCode,
+//                     rules,
+//                 },
+//             ])
+//             .select();
+
+//         // Handle listing insertion errors
+//         if (error) {
+//             throw new Error(error.message);
+//         }
+
+//         const newListingId = data[0]?.id;
+        
+//         // Insert amenities
+//         if (updatedSelectedAmenityIds.length > 0) {
+//             const { error: amenitiesError } = await supabase.rpc('insert_listing_amenities', {
+//                 p_listing_id: newListingId,
+//                 amenity_ids: updatedSelectedAmenityIds,
+//             });
+
+//             if (amenitiesError) {
+//                 throw new Error(amenitiesError.message);
+//             }
+            
+//             toast.success('Successfully added amenities to listing');
+//         }
+
+//         // Success handling
+//         toast.success('Listing created successfully');
+//         onClose();
+
+//     } catch (err) {
+//         // General error handling
+//         toast.error('An error occurred while creating the listing');
+//         console.error('Error creating listing:', err);
+//     }
+// };
+
 const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -191,7 +284,10 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         rules,
         state,
         title,
-        currencyCode
+        currencyCode,
+        minStayDuration, // Added
+        maxStayDuration, // Added
+        stayDurationType // Added
     } = formData;
 
     try {
@@ -228,6 +324,9 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                     currency: currencyCode,
                     postal_code: postalCode,
                     rules,
+                    min_stay_duration: minStayDuration, // New field
+                    max_stay_duration: maxStayDuration, // New field
+                    stay_duration_type: stayDurationType // New field
                 },
             ])
             .select();
@@ -524,184 +623,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             </div>
         )
     );
-
-    // return (
-    //     isOpen && (
-    //         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-    //             <div className="bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
-    //                 <div className="sticky top-0 bg-white p-4 border-b flex justify-between items-center">
-    //                     <h2 className="text-2xl font-bold text-gray-800">Create New Listing</h2>
-    //                     <button 
-    //                         onClick={onClose}
-    //                         className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-    //                     >
-    //                         <span className="text-gray-500 text-xl">×</span>
-    //                     </button>
-    //                 </div>
-
-    //                 <form onSubmit={handleSubmit} className="p-6 space-y-6">
-    //                     <div className="space-y-2">
-    //                         <label className="block text-xl font-bold text-black">Title</label>
-    //                         <input
-    //                             type="text"
-    //                             required
-    //                             value={formData.title}
-    //                             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-    //                             className="w-full px-3 py-2 border-4 border-black text-black focus:outline-none focus:bg-yellow-300"
-    //                         />
-    //                     </div>
-
-    //                     <div className="space-y-2">
-    //                         <label className="block text-xl font-bold text-black">Description</label>
-    //                         <textarea
-    //                             required
-    //                             value={formData.description}
-    //                             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-    //                             className="w-full px-3 py-2 border-4 border-black text-black focus:outline-none focus:bg-yellow-300 h-32"
-    //                         />
-    //                     </div>
-
-    //                     <div className="space-y-2">
-    //                         <label className="block text-xl font-bold text-black">Category</label>
-    //                         <select 
-    //                             onChange={(e) => setSelectedCategoryId(Number(e.target.value))}
-    //                             className="w-full px-3 py-2 border-4 border-black text-black focus:outline-none focus:bg-yellow-300"
-    //                         >
-    //                             <option value="">Select a category</option>
-    //                             {categories.map((cat) => (
-    //                                 <option key={cat.id} value={cat.id}>{cat.name}</option>
-    //                             ))}
-    //                         </select>
-    //                     </div>
-
-    //                     <div className="space-y-2">
-    //                         <label className="block text-xl font-bold text-black">Sub category</label>
-    //                         <select 
-    //                             onChange={(e) => setSelectedSubCategoryId(Number(e.target.value))}
-    //                             className="w-full px-3 py-2 border-4 border-black text-black focus:outline-none focus:bg-yellow-300"
-    //                         >
-    //                             <option value="">{ selectedCategoryId !== null ? 'Select a sub category': 'First select a category' }</option>
-    //                             {subcategories.map((cat) => (
-    //                                 <option key={cat.id} value={cat.id}>{cat.name} - {cat.description}</option>
-    //                             ))}
-    //                         </select>
-    //                     </div>
-
-    //                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-    //                         <div className="space-y-2">
-    //                             <label className="block text-xl font-bold text-black">Price</label>
-    //                                 <CurrencyInput
-    //                                     price={formData.price}
-    //                                     currencyCode={formData.currencyCode}
-    //                                     onPriceChange={handlePriceChange}
-    //                                     onCurrencyChange={handleCurrencyChange}
-    //                                 />
-    //                         </div>
-
-    //                         <div className="space-y-2">
-    //                             <label className="block text-xl font-bold text-black">Featured Image</label>
-    //                             <input
-    //                                 type="file"
-    //                                 accept="image/*"
-    //                                 onChange={(e) => setFormData({ ...formData, featuredImage: e.target.files ? e.target.files[0] : null })}
-    //                                 className="w-full px-3 py-2 border-4 border-black text-black focus:outline-none focus:bg-yellow-300"
-    //                             />
-    //                         </div>
-    //                     </div>
-
-    //                     <div className="space-y-2">
-    //                         <label className="block text-xl font-bold text-black">Additional Images</label>
-    //                         <input
-    //                             type="file"
-    //                             accept="image/*"
-    //                             multiple
-    //                             onChange={handleImageChange}
-    //                             className="w-full px-3 py-2 border-4 border-black text-black focus:outline-none focus:bg-yellow-300"
-    //                         />
-    //                     </div>
-
-    //                     <div className="space-y-4">
-    //                         <label className="block text-xl font-bold text-black">Location Details</label>
-    //                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-    //                             <input
-    //                                 type="text"
-    //                                 placeholder="Address"
-    //                                 value={formData.address}
-    //                                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-    //                                 className="w-full px-3 py-2 border-4 border-black text-black focus:outline-none focus:bg-yellow-300"
-    //                             />
-    //                             <input
-    //                                 type="text"
-    //                                 placeholder="City"
-    //                                 value={formData.city}
-    //                                 onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-    //                                 className="w-full px-3 py-2 border-4 border-black text-black focus:outline-none focus:bg-yellow-300"
-    //                             />
-    //                             <input
-    //                                 type="text"
-    //                                 placeholder="State"
-    //                                 value={formData.state}
-    //                                 onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-    //                                 className="w-full px-3 py-2 border-4 border-black text-black focus:outline-none focus:bg-yellow-300"
-    //                             />
-    //                             <input
-    //                                 type="text"
-    //                                 placeholder="Country"
-    //                                 value={formData.country}
-    //                                 onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-    //                                 className="w-full px-3 py-2 border-4 border-black text-black focus:outline-none focus:bg-yellow-300"
-    //                             />
-    //                             <input
-    //                                 type="text"
-    //                                 placeholder="Postal Code"
-    //                                 value={formData.postalCode}
-    //                                 onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-    //                                 className="w-full px-3 py-2 border-4 border-black text-black focus:outline-none focus:bg-yellow-300"
-    //                             />
-    //                         </div>
-    //                     </div>
-
-
-    //                     <div className="space-y-2">
-    //                         <label className="block text-xl font-bold text-black">Amenities</label>
-    //                             { amenities.map((a) => (
-    //                                 <label className="cursor-pointer ml-1 mr-4 whitespace-nowrap text-slate-600 text-sm" htmlFor={`custom-checkbox-${a.id}`} >
-    //                                     <input
-    //                                         type="checkbox"
-    //                                         id={`custom-checkbox-${a.id}`}
-    //                                         name={a.name}
-    //                                         value={a.name}
-    //                                         checked={a.checked}
-    //                                         onChange={() => handleCheckedStateChange(a.id, a.checked)}
-    //                                         className='whitespace-nowrap ml-1 mr-1'
-    //                                      />
-    //                                         {a.name}
-    //                                     </label>
-    //                             ))}
-    //                     </div>
-
-    //                     <div className="space-y-2">
-    //                         <label className="block text-xl font-bold text-black">Rules</label>
-    //                         <textarea
-    //                             value={formData.rules}
-    //                             onChange={(e) => setFormData({ ...formData, rules: e.target.value })}
-    //                             className="w-full px-3 py-2 border-4 border-black text-black focus:outline-none focus:bg-yellow-300 h-32"
-    //                         />
-    //                     </div>
-
-    //                     <div className="pt-4">
-    //                         <button 
-    //                             type="submit"
-    //                             className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-    //                         >
-    //                             Submit Listing
-    //                         </button>
-    //                     </div>
-    //                 </form>
-    //             </div>
-    //         </div>
-    //     )
-    // );
-};
+}
 
 export default ListingsPopup;

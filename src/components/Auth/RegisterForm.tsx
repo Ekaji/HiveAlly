@@ -41,7 +41,7 @@ export default function RegisterForm() {
 
         if (data.user) {
           toast.success('Registration successful! Please complete your profile.');
-          navigate('/user/profile');
+          navigate('/user/onboarding');
         }
       } catch (error: any) {
         toast.error(error.message);

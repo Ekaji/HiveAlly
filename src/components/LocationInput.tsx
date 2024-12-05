@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import '@geoapify/geocoder-autocomplete/styles/minimal.css';
 import {
   GeoapifyGeocoderAutocomplete,
@@ -13,31 +13,35 @@ interface LocationDetails {
 }
 
 interface LocationInputProps {
-  setCurrentLocation: Dispatch<SetStateAction<string>>;
+  setCurrentLocation: Dispatch<SetStateAction<LocationDetails[]>>;
   isEditing: boolean; 
-  currentLocation: string;
-}
+  currentLocation: LocationDetails,
+}[]
 
-export const LocationInput: React.FC<LocationInputProps> = ( {setCurrentLocation, currentLocation, isEditing}: any) => {
-  const [locationDetails, setLocationDetails] = useState<LocationDetails>({
-    formattedAddress: '',
-    country: '',
+export const LocationInput: React.FC<LocationInputProps> = ( {setCurrentLocation, currentLocation, isEditing}) => {
+  const [locationDetails, setLocationDetails] = useState<LocationDetails[]>([{
     city: '',
-    state: ''
-  });
+    state: '',
+    country: '',
+    formattedAddress: '',
+  }]);
 
-  setCurrentLocation(locationDetails)
+  
+  useEffect(() => {
+    setCurrentLocation(locationDetails)
+    console.log({locationDetails})
+  }, [locationDetails])
 
   const onPlaceSelect = (result: any) => {
     if (result && result.properties) {
       const addressComponents = result.properties;
       
-      setLocationDetails({
+      setLocationDetails([{
         formattedAddress: addressComponents.formatted || '',
         country: addressComponents.country || '',
         city: addressComponents.city || addressComponents.county || '',
         state: addressComponents.state || ''
-      });
+      }]);
 
       console.log('Full Location Details:', {
         formattedAddress: addressComponents.formatted,
@@ -64,7 +68,7 @@ export const LocationInput: React.FC<LocationInputProps> = ( {setCurrentLocation
                   : 'border-0'
                 }`}>
         <GeoapifyGeocoderAutocomplete
-          placeholder={currentLocation ? currentLocation.toString(): "Enter location (e.g., Lagos, Nigeria)"}
+          placeholder={currentLocation ? currentLocation.formattedAddress : "Enter location (e.g., Lagos, Nigeria)"}
           placeSelect={onPlaceSelect}
           suggestionsChange={onSuggestionChange}
         />

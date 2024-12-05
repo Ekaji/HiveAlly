@@ -191,10 +191,10 @@ export default function InteractiveListingDetails() {
                 <MapPin className="w-5 h-5 mr-2 text-primary" />
                 <span>{listing.address}, {listing.postal_code}</span>
               </div>
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <Book className="w-5 h-5 mr-2 text-primary" />
                 <span>ID: {listing.id}</span>
-              </div>
+              </div> */}
               {/* Add more details as needed */}
             </div>
           </CardContent>

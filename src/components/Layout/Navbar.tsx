@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Bell, User } from 'lucide-react';
 import { RootState } from '../../store/store';
-import { Link, Outlet  } from 'react-router-dom';
+import { Link, Outlet, useNavigate  } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { useEffect, useState } from 'react';
 
@@ -9,15 +9,18 @@ export default function Navbar() {
   const { user } = useSelector((state: RootState) => state.auth);
   const [profile, setProfile]= useState([])
 
+  const navigate = useNavigate();
 
   const fetchProfile = async () => {
-    const { data, error } = await supabase
-            .from('profile')
-            .select('*')
-            .eq('id', user.id);
-            console.log({profileData:data})
-            if (!error) setProfile(data || []);
-  }
+    if (user && user.id) {
+      const { data, error } = await supabase
+              .from('profile')
+              .select('*')
+              .eq('id', user.id);
+              console.log({profileData:data})
+              if (!error) setProfile(data || []);
+      }
+    }
 
   useEffect(() => {
     fetchProfile()

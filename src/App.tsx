@@ -17,6 +17,8 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/user/Profile';
 import Listings from './pages/user/Listings';
 import Listing from './pages/listing';
+import Onboarding from './pages/onboarding';
+import UserInterestsPage from './pages/onboarding/UserInterests';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -46,15 +48,18 @@ export default function App() {
           {/* Public routes */}
           <Route path="/" element={<Navbar />} >
             <Route index element={<Home />} />
-            {/* <Route path="/" element={<Home />} /> */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/listing/:listingId" element={<Listing />} />
           </Route>
 
+          <Route path="/onboarding" element={<Navbar />} >
+            <Route path="setup" element={<Onboarding />} />
+            <Route path="interests" element={<UserInterestsPage />} />
+          </Route>
+
           {/* Protected routes */}
           <Route path="/user" element={<AuthLayout />}>
-            {/* <Route index element={<Dashboard />} /> */}
             <Route path="profile" element={<Profile />} />
             <Route path="listings" element={<Listings />} />
           </Route>
